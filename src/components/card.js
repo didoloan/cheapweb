@@ -14,16 +14,11 @@ function Card(props) {
 
     return (
         <div style={cardStyle.container(matches)}>
-            <img src={crdimg} height='auto' width='100%'/>
+            <img src={crdimg} alt='what we do' height='auto' width='100%'/>
         </div>
     );
 }
 
-const imgStyle = {
-    backgroundImage: 'url(../src/act1.jpg)',
-    height:'50%',
-    width: '100%'
-}
 
 const cardStyle = {
     container: isRowBased => ({

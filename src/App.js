@@ -14,7 +14,7 @@ function App() {
         <Card title='Who we are'/>
         <Card title='Who we are'/>
       </div>
-      <Footer backColor='#34495e' />
+      <Footer backColor='#34495e'/>
     </div>
   );
 }

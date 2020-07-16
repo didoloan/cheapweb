@@ -34,6 +34,7 @@ function Navbar(props) {
             textAlign: 'left',
             width: isMobile?150:'auto',
             display: isMobile?'block':'flex',
+            // zIndex: 2,
             alignItems: 'center',
             listStyleType: 'none',
             position: isMobile?'absolute':'initial',
