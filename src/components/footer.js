@@ -14,7 +14,7 @@ function Footer(props) {
 
     const footerStyle = {
         padding: 30,
-        backgroundColor: props.backColor,
+        backgroundColor: '#eee'||props.backColor,
         margin: 0,
         boxSizing: 'border-box'
     }
@@ -40,7 +40,7 @@ function Footer(props) {
     }
 
     const linkHeader = {
-        color: '#ffffff',
+        color: props.frontColor,
         fontSize: '1.3em',
         fontWeight: 600,
         

@@ -53,14 +53,14 @@ function Navbar(props) {
         },
         leave: (e) => {
             // e.target.style.backgroundColor='transparent';
-            e.target.style.color='#fff';
+            e.target.style.color=props.frontColor;
         }
     }
     const navItem = {
         display: matches?'block':'inline-block',
         padding: '5px 12px',
         marginLeft: 0,
-        color: '#fff',
+        color: props.frontColor,
         fontSize: '1.4em',
         fontWeight: 400,
         cursor: 'pointer',
@@ -84,7 +84,7 @@ function Navbar(props) {
     const barStyle = {
         width:'100%', 
         height: '30%', 
-        backgroundColor:'#fff',
+        backgroundColor:props.frontColor,
         margin: 0,
         padding:0,
         transition: '.5s',
