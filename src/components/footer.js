@@ -20,10 +20,15 @@ function Footer(props) {
     }
 
     const linkContainerStyle = {
-        display:'flex', 
-        justifyContent:'space-between',
-        flexWrap: 'wrap',
-        padding: 20
+        container: isMobile => ({
+            display:'flex', 
+            justifyContent:'space-between',
+            flexWrap: 'wrap',
+            padding: 20,
+            boxSizing: 'border-box',
+            marginRight: isMobile?0:200,
+            textAlign: 'center'
+        })
     }
 
     const linkStyle = {
@@ -41,28 +46,26 @@ function Footer(props) {
         
     }
 
-    const navLinks = ['Home','About','FAQ','Gallery'];
-
     return (
         <div style={{...footerStyle, width: '100%'}}>
-            <div style={linkContainerStyle}>
+            <div style={linkContainerStyle.container(matches)}>
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>CONTACT US</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        <li style={{paddingTop:10}}><i class="fas fa-map-marker-alt"></i>&nbsp; In ullamco do deserunt culpa commodo consequat labore tempor.</li>
-                        <li style={{paddingTop:10}}><i class="fas fa-phone-alt"></i>&nbsp; 08000000000, 07077776666</li>
+                        <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-map-marker-alt"></i>&nbsp; In ullamco do deserunt culpa commodo consequat labore tempor.</li>
+                        <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-phone-alt"></i>&nbsp; 08000000000, 07077776666</li>
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>QUICK LINKS</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        {navLinks.map(link => <li style={{paddingTop:10}}><i class="fas fa-angle-right"></i>&nbsp;{link}</li>)}
+                        {props.navLinks.map(link => <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-angle-right"></i>&nbsp;{link}</li>)}
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>NEWSLETTER</h1>
                     <p style={{color:'#fff'}}>Nostrud ea reprehenderit sit in in consectetur ad ea veniam. Velit cupidatat ea duis qui adipisicing sint irure. Officia nulla Lorem voluptate sint nulla. Laborum nulla cillum est veniam. Labore anim ut sint ullamco commodo nostrud sit laboris ut pariatur laborum sit. Amet sunt mollit velit sint ullamco exercitation officia.</p>
-                    <input type='text' placeholder='Your email here' style={{width:'100%', height:40, border:0, padding:10, textIndent:10, fontSize:'1.2em', fontWeight:500, borderRadius:20}}/>
+                    <input type='text' placeholder='Your email here' style={{display:'block', height:40, border:0, padding:10, textIndent:10, fontSize:'1.2em', margin:0, fontWeight:500, borderRadius:20}}/>
                 </div>
             </div>
             <div>
