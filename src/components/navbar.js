@@ -1,6 +1,25 @@
 import React, { useState, useEffect } from 'react';
 
 function Navbar(props) {
+
+    const wrdz = ['L', 'O', 'G', 'O'];
+
+    const [wrdIndex, setWrdIdx] = useState(0);
+    const [logo,setLogo] = useState('');
+
+    const addNextWrd = () => {
+        if(wrdIndex===3){
+            setLogo('LOGO');
+        }else{
+            if(wrdIndex<3){
+                setLogo(logo+wrdz[wrdIndex]);
+                setWrdIdx(wrdIndex+1);
+            }
+        }
+    }
+
+
+    
     
     const mediaMatch = window.matchMedia('(max-width: 768px)');
 
@@ -10,6 +29,11 @@ function Navbar(props) {
         const handler = e => setMatches(e.matches);
         mediaMatch.addListener(handler);
         return () => mediaMatch.removeListener(handler);
+    });
+
+    useEffect(() => {
+        const mvmt = setInterval(() => addNextWrd(),200);
+        return () => clearInterval(mvmt);
     })
 
     
@@ -32,13 +56,14 @@ function Navbar(props) {
         container: isMobile => ({
             overflow:'hidden',
             textAlign: 'left',
-            width: isMobile?150:'auto',
+            width: isMobile?'100%':'auto',
+            padding: isMobile?'0 40px 0 40px':'auto',
             display: isMobile?'block':'flex',
             zIndex: 2,
             alignItems: 'center',
             listStyleType: 'none',
             position: isMobile?'absolute':'initial',
-            right: navState?0:'-150px',
+            right: navState?0:'-100%',
             top: 40,
             backgroundColor: props.backColor,
             transition: '.5s',
@@ -87,6 +112,7 @@ function Navbar(props) {
         backgroundColor:props.frontColor,
         margin: 0,
         padding:0,
+        // transformOrigin: '50% 50%',
         transition: '.5s',
     }
 
@@ -95,7 +121,7 @@ function Navbar(props) {
     return (
         <div style={navbarStyle}>
             <div style={{backgroundColor:'#fff', width: 'auto', padding:11, margin:0}}>
-                <h1 style={{margin:0,padding:0}}>LOGO</h1>
+                <h1 style={{margin:0,padding:0}}>{logo}</h1>
             </div>
             
             <ul style={navStyle.container(matches)}>

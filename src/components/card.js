@@ -15,6 +15,7 @@ function Card(props) {
     return (
         <div style={cardStyle.container(matches)}>
             <img src={crdimg} alt='what we do' height='auto' width='100%'/>
+            <h1>{props.title}</h1>
         </div>
     );
 }
@@ -24,7 +25,7 @@ const cardStyle = {
     container: isRowBased => ({
         width: isRowBased?'100%':360,
         overflow: 'hidden',
-        height: 500,
+        height: 400,
         padding: 0,
         borderRadius: '6px 6px 0 0',
         marginBottom: 50,
