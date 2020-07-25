@@ -54,10 +54,10 @@ function Navbar(props) {
     }
     const navStyle = {
         container: isMobile => ({
-            overflow:'hidden',
+            // overflow:'hidden',
             textAlign: 'left',
             width: isMobile?'100%':'auto',
-            padding: isMobile?'0 40px 0 40px':'auto',
+            padding: isMobile?'0 40px 0 40px':0,
             display: isMobile?'block':'flex',
             zIndex: 2,
             alignItems: 'center',
@@ -74,11 +74,13 @@ function Navbar(props) {
     const enterLeave = {
         enter: (e) => {
             // e.target.style.backgroundColor='#ddd';
-            e.target.style.color='#ccc';
+            // e.target.style.color='#777';
+            e.target.style.textDecoration='underline';
         },
         leave: (e) => {
             // e.target.style.backgroundColor='transparent';
             e.target.style.color=props.frontColor;
+            e.target.style.textDecoration='none';
         }
     }
     const navItem = {
@@ -89,7 +91,8 @@ function Navbar(props) {
         fontSize: '1.4em',
         fontWeight: 400,
         cursor: 'pointer',
-        transition: '.5s'
+        transition: '.5s',
+        position: 'relative'
     }
 
     const burger = {
@@ -116,6 +119,28 @@ function Navbar(props) {
         transition: '.5s',
     }
 
+    const subStyle = {
+        container: isMobile => ({
+            position: isMobile?'inherit':'absolute',
+            top: isMobile?0:30,
+            padding: isMobile?0:'10px 0 0 0',
+            listStyleType:'none',
+            left: 0,
+            width: '100%',
+            margin:0,
+            boxSizing: 'border-box',
+            backgroundColor: props.backColor
+        })
+        
+    }
+
+    const subItemStyle = {
+        container: isMobile => ({
+            display: 'block',
+            padding: isMobile?'2px 0':'2px 12px'
+        })
+    }
+
     const [navState, setNavState] = useState(0);
 
     return (
@@ -125,7 +150,11 @@ function Navbar(props) {
             </div>
             
             <ul style={navStyle.container(matches)}>
-                {props.navLinks.map(link => <li style={navItem} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{link}</li>)}
+                {props.navLinks.map(link => <li style={navItem} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{link.title}&nbsp;{link.sub?<i class="fas fa-angle-down"></i>:''}
+                    {link.sub?<ul style={subStyle.container(matches)}>
+                        {link.sub.map(sub => <li style={subItemStyle.container(matches)} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{sub.title}</li>)}
+                    </ul>:''}
+                </li>)}
             </ul>
 
             <div style={burger.container(matches)} onClick={() => setNavState(!navState)}>

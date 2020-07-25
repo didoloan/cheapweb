@@ -7,7 +7,12 @@ import Slider from './components/slider';
 import './App.css';
 
 function App() {
-  const navLinks = ['Home','About', 'Blog', 'FAQ','Gallery'];
+  const navLinks = [
+    {title:'Home', sub:null},
+    {title:'About', sub:[{title:'Company'}, {title:'Business'}]}, 
+    {title:'Blog', sub:[{title:'Found'}, {title:'Lost'}, {title:'Tried'}]}, 
+    {title:'FAQ', sub:null},{title:'Gallery', sub:null}
+  ];
 
   const [back, front] = ['#fff', '#34495e'];
 

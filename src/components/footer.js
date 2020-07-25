@@ -59,7 +59,7 @@ function Footer(props) {
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>QUICK LINKS</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        {props.navLinks.map(link => <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-angle-right"></i>&nbsp;{link}</li>)}
+                        {props.navLinks.map(link => <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-angle-right"></i>&nbsp;{link.title}</li>)}
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
