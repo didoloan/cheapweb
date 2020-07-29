@@ -6,7 +6,7 @@ const Slider = (props) => {
 
     const [imgIndex, setIndex] = useState(0);
     const switchSlide = (dir) => {
-        console.log('called now');
+        // console.log('called now');
         dir?
         (imgIndex<2)?
             setIndex(imgIndex+1):setIndex(0)
@@ -74,7 +74,7 @@ const Slider = (props) => {
 
     return (
         <div style={viewStyle.container(matches)}>
-            <img src={images[imgIndex]} width='100%' height='auto'/>
+            <img src={images[imgIndex]} width='100%' height='auto' alt='sliding images'/>
             <div onClick={() => switchSlide(0)} style={{...prevnext, left:matches?10:30}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}><i class="fas fa-caret-left fa-3x"></i></div>
             <div onClick={() => switchSlide(1)} style={{...prevnext, right:matches?10:30}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}><i class="fas fa-caret-right fa-3x"></i></div>
         </div>

@@ -52,24 +52,24 @@ function Footer(props) {
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>CONTACT US</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-map-marker-alt"></i>&nbsp; In ullamco do deserunt culpa commodo consequat labore tempor.</li>
-                        <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-phone-alt"></i>&nbsp; 08000000000, 07077776666</li>
+                        <li style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-map-marker-alt"></i>&nbsp; In ullamco do deserunt culpa commodo consequat labore tempor.</li>
+                        <li style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-phone-alt"></i>&nbsp; 08000000000, 07077776666</li>
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>QUICK LINKS</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        {props.navLinks.map(link => <li style={{paddingTop:10, color: '#ccc'}}><i class="fas fa-angle-right"></i>&nbsp;{link.title}</li>)}
+                        {props.navLinks.map((link,index) => <li key={index} style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-angle-right"></i>&nbsp;{link.title}</li>)}
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>NEWSLETTER</h1>
-                    <p style={{color:'#fff'}}>Nostrud ea reprehenderit sit in in consectetur ad ea veniam. Velit cupidatat ea duis qui adipisicing sint irure. Officia nulla Lorem voluptate sint nulla. Laborum nulla cillum est veniam. Labore anim ut sint ullamco commodo nostrud sit laboris ut pariatur laborum sit. Amet sunt mollit velit sint ullamco exercitation officia.</p>
+                    <p style={{color:'#736b6b'}}>Nostrud ea reprehenderit sit in in consectetur ad ea veniam. Velit cupidatat ea duis qui adipisicing sint irure. Officia nulla Lorem voluptate sint nulla. Laborum nulla cillum est veniam. Labore anim ut sint ullamco commodo nostrud sit laboris ut pariatur laborum sit. Amet sunt mollit velit sint ullamco exercitation officia.</p>
                     <input type='text' placeholder='Your email here' style={{display:'block', height:40, border:0, padding:10, textIndent:10, fontSize:'1.2em', margin:0, fontWeight:500, borderRadius:20}}/>
                 </div>
             </div>
             <div>
-                <p style={{textAlign:'center', color:'#fff'}}>{new Date().getFullYear()}&copy;Copyright. All Rights Reserved.</p>
+                <p style={{textAlign:'center', color:props.frontColor}}>{new Date().getFullYear()}&copy;Copyright. All Rights Reserved.</p>
             </div>
             
         </div>

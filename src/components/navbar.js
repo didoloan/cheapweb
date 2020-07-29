@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { navigate } from 'hookrouter';
 
 function Navbar(props) {
 
@@ -74,15 +75,24 @@ function Navbar(props) {
     const enterLeave = {
         enter: (e) => {
             // e.target.style.backgroundColor='#ddd';
-            // e.target.style.color='#777';
-            e.target.style.textDecoration='underline';
+            e.target.style.color='#777';
+            // e.target.style.textDecoration='underline';
+            // (e.target.children.length!==0)?e.target.children[1].style.display = 'block':console.log('');
         },
         leave: (e) => {
             // e.target.style.backgroundColor='transparent';
             e.target.style.color=props.frontColor;
-            e.target.style.textDecoration='none';
+            // e.target.style.textDecoration='none';
+            // (e.target.children.length!==0)?e.target.children[1].style.display = 'none':console.log('');
         }
     }
+
+    const toggleNextSibling = (e) => {
+        e.stopPropagation();
+        (e.target.nextElementSibling.style.display==='none')?e.target.style.transform = 'rotate(180deg)':e.target.style.transform = 'rotate(0deg)';
+        e.target.nextElementSibling.style.display = (e.target.nextElementSibling.style.display==='none')?'block':'none';
+    }
+
     const navItem = {
         display: matches?'block':'inline-block',
         padding: '5px 12px',
@@ -129,7 +139,9 @@ function Navbar(props) {
             width: '100%',
             margin:0,
             boxSizing: 'border-box',
-            backgroundColor: props.backColor
+            backgroundColor: props.backColor,
+            display:'none',
+            transition:'.5s'
         })
         
     }
@@ -150,9 +162,9 @@ function Navbar(props) {
             </div>
             
             <ul style={navStyle.container(matches)}>
-                {props.navLinks.map(link => <li style={navItem} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{link.title}&nbsp;{link.sub?<i class="fas fa-angle-down"></i>:''}
+                {props.navLinks.map(link => <li style={navItem} onClick={() => {setTimeout(navigate(link.route),0);setNavState(0);}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{link.title}&nbsp;{link.sub?<i style={{textDecoration:'none', transition:'.5s'}} onClick={toggleNextSibling} className="fas fa-angle-down"></i>:''}
                     {link.sub?<ul style={subStyle.container(matches)}>
-                        {link.sub.map(sub => <li style={subItemStyle.container(matches)} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{sub.title}</li>)}
+                        {link.sub.map(sub => <li style={subItemStyle.container(matches)} onClick={(e) => {setTimeout(navigate(link.route+sub.route),0);setNavState(0);e.target.parentElement.style.display='none';}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{sub.title}</li>)}
                     </ul>:''}
                 </li>)}
             </ul>
