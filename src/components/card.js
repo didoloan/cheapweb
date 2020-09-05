@@ -1,21 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import crdimg from '../act1.jpg';
+import useDevice from '../customhooks/detectDevice';
 
 function Card(props) {
-    const mediaMatch = window.matchMedia('(max-width: 768px)');
-
-    const [matches, setMatches] = useState(mediaMatch.matches);
-
-    useEffect(() => {
-        const handler = e => setMatches(e.matches);
-        mediaMatch.addListener(handler);
-        return () => mediaMatch.removeListener(handler);
-    })
+    const matches = useDevice(768);
 
     return (
         <div style={cardStyle.container(matches)}>
-            <img src={crdimg} alt='what we do' height='auto' width='100%'/>
-            <h1>{props.title}</h1>
+            <div style={{position:'relative'}}>
+                <img src={crdimg} alt='what we do' height='auto' width='100%'/>
+                <h1 style={{position:'absolute',zIndex:3, width:'100%', top:'40%', textAlign:'center', color:'#fff'}}>{props.title}</h1>
+                <p>Et proident eu culpa ut dolor laborum veniam ad ullamco do voluptate it est et. </p>
+            </div> 
+            
         </div>
     );
 }
@@ -27,9 +24,9 @@ const cardStyle = {
         overflow: 'hidden',
         height: 400,
         padding: 0,
-        borderRadius: '6px 6px 0 0',
+        borderRadius: 6,
         marginBottom: 50,
-        boxShadow: '0 5px 12px #ccc',
+        boxShadow: 'hsl(0, 0%, 80%) 0 0 16px',
         textAlign: 'center',
         boxSizing: 'border-box'
     })

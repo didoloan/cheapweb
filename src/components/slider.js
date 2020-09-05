@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import useDevice from '../customhooks/detectDevice';
 
 
 const Slider = (props) => {
     const images = ['https://images.pexels.com/photos/1191503/pexels-photo-1191503.jpeg?cs=srgb&dl=low-angle-photography-of-man-and-woman-in-front-of-tree-1191503.jpg&fm=jpg','https://images.pexels.com/photos/3765175/pexels-photo-3765175.jpeg?crop=entropy&cs=srgb&dl=woman-in-white-polo-shirt-holding-a-pen-near-laptop-3765175.jpg&fit=crop&fm=jpg&h=853&w=1280','https://images.pexels.com/photos/3373352/pexels-photo-3373352.jpeg?cs=srgb&dl=photo-of-people-sitting-beside-cactus-plant-3373352.jpg&fm=jpg'];
 
     const [imgIndex, setIndex] = useState(0);
+    const [imgOpacity, setOpacity] = useState(1);
     const switchSlide = (dir) => {
         // console.log('called now');
         dir?
@@ -15,18 +17,14 @@ const Slider = (props) => {
             setIndex(imgIndex-1):setIndex(2)
     }
 
-    const mediaMatch = window.matchMedia('(max-width: 768px)');
-
-    const [matches, setMatches] = useState(mediaMatch.matches);
+    const matches = useDevice(768);
 
     useEffect(() => {
-        const handler = e => setMatches(e.matches);
-        mediaMatch.addListener(handler);
-        return () => mediaMatch.removeListener(handler);
-    })
-
-    useEffect(() => {
-        const mvmt = setInterval(() => switchSlide(1), 3000);
+        const mvmt = setInterval(() => {
+            setOpacity(0)
+            switchSlide(1);
+            setOpacity(1);
+        }, 3000);
         return () => clearInterval(mvmt);
     })
     // const porc = setInterval(switchSlide, 1000);
@@ -72,9 +70,26 @@ const Slider = (props) => {
         }
     }
 
+    const seeker = {
+        width: 10,
+        height: 10,
+        backgroundColor: '#fff',
+        opacity: .5,
+        margin: 7,
+        borderRadius: '50%',
+        display: 'inline-block',
+        cursor: 'pointer',
+        transition: '.5s'
+    }
+
     return (
         <div style={viewStyle.container(matches)}>
-            <img src={images[imgIndex]} width='100%' height='auto' alt='sliding images'/>
+            <img src={images[imgIndex]} width='100%' height='auto' alt='sliding images' style={{opacity:imgOpacity, transition:'1s'}}/>
+            <div style={{position: 'absolute', bottom:15, textAlign:'center', width: '100%'}}>
+                <div style={{...seeker, opacity:imgIndex===0?1:.5}} onClick={() => setIndex(0)}></div>
+                <div style={{...seeker, opacity:imgIndex===1?1:.5}} onClick={() => setIndex(1)}></div>
+                <div style={{...seeker, opacity:imgIndex===2?1:.5}} onClick={() => setIndex(2)}></div>
+            </div>
             <div onClick={() => switchSlide(0)} style={{...prevnext, left:matches?10:30}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}><i class="fas fa-caret-left fa-3x"></i></div>
             <div onClick={() => switchSlide(1)} style={{...prevnext, right:matches?10:30}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}><i class="fas fa-caret-right fa-3x"></i></div>
         </div>

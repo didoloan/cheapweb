@@ -1,16 +1,10 @@
 import React, {useState, useEffect} from 'react';
+import useDevice from '../customhooks/detectDevice';
+import {navigate} from 'hookrouter';
 
 function Footer(props) {
 
-    const mediaMatch = window.matchMedia('(max-width: 768px)');
-
-    const [matches, setMatches] = useState(mediaMatch.matches);
-
-    useEffect(() => {
-        const handler = e => setMatches(e.matches);
-        mediaMatch.addListener(handler);
-        return () => mediaMatch.removeListener(handler);
-    });
+    const matches = useDevice(768);
 
     const footerStyle = {
         padding: 30,
@@ -59,13 +53,13 @@ function Footer(props) {
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>QUICK LINKS</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        {props.navLinks.map((link,index) => <li key={index} style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-angle-right"></i>&nbsp;{link.title}</li>)}
+                        {props.navLinks.map((link,index) => <li key={index} onClick={() => setTimeout(navigate(link.route))} style={{paddingTop:10, cursor:'pointer', color: '#736b6b'}}><i className="fas fa-angle-right"></i>&nbsp;{link.title}</li>)}
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>NEWSLETTER</h1>
-                    <p style={{color:'#736b6b'}}>Nostrud ea reprehenderit sit in in consectetur ad ea veniam. Velit cupidatat ea duis qui adipisicing sint irure. Officia nulla Lorem voluptate sint nulla. Laborum nulla cillum est veniam. Labore anim ut sint ullamco commodo nostrud sit laboris ut pariatur laborum sit. Amet sunt mollit velit sint ullamco exercitation officia.</p>
-                    <input type='text' placeholder='Your email here' style={{display:'block', height:40, border:0, padding:10, textIndent:10, fontSize:'1.2em', margin:0, fontWeight:500, borderRadius:20}}/>
+                    <p style={{color:'#736b6b'}}>Join our newsletter to receive latest news and updates from us.</p>
+                    <input type='email' placeholder='Your email here' style={{display:'block', height:40, width:'100%', border:0, textIndent:10, fontSize:'1em', margin:0, fontWeight:500}}/>
                 </div>
             </div>
             <div>

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { navigate } from 'hookrouter';
+import useDevice from '../customhooks/detectDevice';
+import useScroll from '../customhooks/detectScroll';
 
 function Navbar(props) {
-
+    const navRef = React.createRef();
     const wrdz = ['L', 'O', 'G', 'O'];
 
+
     const [wrdIndex, setWrdIdx] = useState(0);
-    const [logo,setLogo] = useState('');
+    const [logo,setLogo] = useState(''); 
 
     const addNextWrd = () => {
         if(wrdIndex===3){
@@ -21,16 +24,9 @@ function Navbar(props) {
 
 
     
-    
-    const mediaMatch = window.matchMedia('(max-width: 768px)');
+    const matches = useDevice(768);
 
-    const [matches, setMatches] = useState(mediaMatch.matches);
-
-    useEffect(() => {
-        const handler = e => setMatches(e.matches);
-        mediaMatch.addListener(handler);
-        return () => mediaMatch.removeListener(handler);
-    });
+    const [scrollPos, barVisi] = useScroll();
 
     useEffect(() => {
         const mvmt = setInterval(() => addNextWrd(),200);
@@ -39,23 +35,29 @@ function Navbar(props) {
 
     
     const navbarStyle = {
-        position: 'relative',
-        height: matches?60:100,
-        width: '100%',
-        paddingLeft: 30,
-        paddingRight: 30,
-        backgroundColor: props.backColor,
-        color: props.color,
-        display: 'flex',
-        justifyContent: 'space-between',
-        margin: 0,
-        boxShadow: '0 3px 8px #ccc',
-        boxSizing: 'border-box',
-        alignItems: 'center'
+        container: scroll => ({
+            position: 'fixed',
+            top: barVisi?0:-100,
+            height: matches?60:100,
+            width: '100%',
+            paddingLeft: 30,
+            paddingRight: 30,
+            backgroundColor: props.backColor,
+            color: props.color,
+            display: 'flex',
+            justifyContent: 'space-between',
+            margin: 0,
+            boxShadow: '0 3px 8px #ccc',
+            boxSizing: 'border-box',
+            alignItems: 'center',
+            transition: '.5s',
+            zIndex: 2
+        })
+        
     }
     const navStyle = {
         container: isMobile => ({
-            // overflow:'hidden',
+            overflow:'hidden',
             textAlign: 'left',
             width: isMobile?'100%':'auto',
             padding: isMobile?'0 40px 0 40px':0,
@@ -87,9 +89,21 @@ function Navbar(props) {
         }
     }
 
+    const closeSubs = (e) => {
+        if(e.target.nextElementSibling.style.display!=='block'){
+            for(let li of navRef.current.children){
+                if(li.childElementCount!==0){
+                    li.childNodes[3].style.display = 'none';
+                    li.childNodes[2].style.transform = 'rotateX(180deg)';
+                }
+            }
+        }
+        
+    }
+
     const toggleNextSibling = (e) => {
         e.stopPropagation();
-        (e.target.nextElementSibling.style.display==='none')?e.target.style.transform = 'rotate(180deg)':e.target.style.transform = 'rotate(0deg)';
+        (e.target.nextElementSibling.style.display==='none')?e.target.style.transform = 'rotateX(180deg)':e.target.style.transform = 'rotateX(0deg)';
         e.target.nextElementSibling.style.display = (e.target.nextElementSibling.style.display==='none')?'block':'none';
     }
 
@@ -97,6 +111,8 @@ function Navbar(props) {
         display: matches?'block':'inline-block',
         padding: '5px 12px',
         marginLeft: 0,
+        borderBottom: matches?`1px solid ${props.frontColor}`:'0',
+        // borderBottomWidth:'60%',
         color: props.frontColor,
         fontSize: '1.4em',
         fontWeight: 400,
@@ -136,9 +152,10 @@ function Navbar(props) {
             padding: isMobile?0:'10px 0 0 0',
             listStyleType:'none',
             left: 0,
-            width: '100%',
+            width: 'auto',
             margin:0,
             boxSizing: 'border-box',
+            boxShadow: isMobile?'':'0 3px 8px #ccc',
             backgroundColor: props.backColor,
             display:'none',
             transition:'.5s'
@@ -156,23 +173,23 @@ function Navbar(props) {
     const [navState, setNavState] = useState(0);
 
     return (
-        <div style={navbarStyle}>
+        <div style={navbarStyle.container(scrollPos)}>
             <div style={{backgroundColor:'#fff', width: 'auto', padding:11, margin:0}}>
                 <h1 style={{margin:0,padding:0}}>{logo}</h1>
             </div>
             
-            <ul style={navStyle.container(matches)}>
-                {props.navLinks.map(link => <li style={navItem} onClick={() => {setTimeout(navigate(link.route),0);setNavState(0);}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{link.title}&nbsp;{link.sub?<i style={{textDecoration:'none', transition:'.5s'}} onClick={toggleNextSibling} className="fas fa-angle-down"></i>:''}
+            <ul style={navStyle.container(matches)} ref={navRef}>
+                {props.navLinks.map((link, index) => <li style={navItem} key={index} onClick={() => {setTimeout(navigate(link.route),0);setNavState(0);window.scrollTo(0,0);}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{link.title}&nbsp;{link.sub?<i style={{textDecoration:'none', transition:'.5s'}} onClick={(e) => {closeSubs(e);toggleNextSibling(e)}} className="fas fa-angle-down"></i>:''}
                     {link.sub?<ul style={subStyle.container(matches)}>
-                        {link.sub.map(sub => <li style={subItemStyle.container(matches)} onClick={(e) => {setTimeout(navigate(link.route+sub.route),0);setNavState(0);e.target.parentElement.style.display='none';}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{sub.title}</li>)}
+                        {link.sub.map(sub => <li style={subItemStyle.container(matches)} onClick={(e) => {setTimeout(navigate(`${link.route}${sub.route}`),0);setNavState(0);e.target.parentElement.style.display='none';e.target.parentElement.previousElementSibling.style.transform = 'rotate(0deg)';}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}>{sub.title}</li>)}
                     </ul>:''}
                 </li>)}
             </ul>
 
             <div style={burger.container(matches)} onClick={() => setNavState(!navState)}>
-                <div style={{...barStyle, transform:navState?'rotate(48deg) translateY(15px)':'rotate(0deg) translateY(0)'}}></div>
+                <div style={{...barStyle, transform:navState?'rotate(-48deg) translateY(15px)':'rotate(0deg) translateY(0)'}}></div>
                 <div style={{...barStyle, opacity:navState?0:1}}></div>
-                <div style={{...barStyle, transform:navState?'rotate(-48deg) translateY(-15px)':'rotate(0deg) translateY(0)'}}></div>
+                <div style={{...barStyle, transform:navState?'rotate(48deg) translateY(-15px)':'rotate(0deg) translateY(0)'}}></div>
             </div>
         </div>
     );

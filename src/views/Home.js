@@ -4,7 +4,7 @@ import Slider from '../components/slider';
 
 function Home(props) {
     return (
-        <div>
+        <div style={{transition:'.5s'}}>
             <Slider backColor='#fff'/>
             <div className="content">
                 <Card title='Who we are'/>

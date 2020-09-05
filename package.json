@@ -16,7 +16,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "sync": "aws s3 sync build/ s3://static.website.1",
-    "buildsync": "npm run build & npm run sync",
+    "buildsync": "npm run build && npm run sync",
+    "apache": "sudo cp -r build/* /var/www/html",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
