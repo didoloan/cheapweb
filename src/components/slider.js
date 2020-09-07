@@ -21,13 +21,13 @@ const Slider = (props) => {
 
     useEffect(() => {
         const mvmt = setInterval(() => {
-            setOpacity(0)
+            setOpacity(0.4);
             switchSlide(1);
+            // setTimeout(() => setOpacity(1), 300);
             setOpacity(1);
         }, 3000);
         return () => clearInterval(mvmt);
-    })
-    // const porc = setInterval(switchSlide, 1000);
+    });
 
     const viewStyle = {
         container: isMobile => ({
@@ -49,7 +49,6 @@ const Slider = (props) => {
         borderRadius: '50%',
         position: 'absolute',
         top: '50%',
-        // backgroundColor: props.backColor,
         width: 30,
         height: 30,
         opacity:.6,
@@ -82,13 +81,18 @@ const Slider = (props) => {
         transition: '.5s'
     }
 
+    const slideimg = {
+        container: opacity => ({
+            opacity:opacity, 
+            transition:'1s'
+        })
+    }
+
     return (
         <div style={viewStyle.container(matches)}>
-            <img src={images[imgIndex]} width='100%' height='auto' alt='sliding images' style={{opacity:imgOpacity, transition:'1s'}}/>
+            <img src={images[imgIndex]} width='100%' height='auto' alt='sliding images' style={slideimg.container(imgOpacity)}/>
             <div style={{position: 'absolute', bottom:15, textAlign:'center', width: '100%'}}>
-                <div style={{...seeker, opacity:imgIndex===0?1:.5}} onClick={() => setIndex(0)}></div>
-                <div style={{...seeker, opacity:imgIndex===1?1:.5}} onClick={() => setIndex(1)}></div>
-                <div style={{...seeker, opacity:imgIndex===2?1:.5}} onClick={() => setIndex(2)}></div>
+                {images.map((image, index) => <div style={{...seeker, opacity:imgIndex===index?1:.5}} onClick={() => setIndex(index)}></div>)}
             </div>
             <div onClick={() => switchSlide(0)} style={{...prevnext, left:matches?10:30}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}><i class="fas fa-caret-left fa-3x"></i></div>
             <div onClick={() => switchSlide(1)} style={{...prevnext, right:matches?10:30}} onMouseEnter={enterLeave.enter} onMouseLeave={enterLeave.leave}><i class="fas fa-caret-right fa-3x"></i></div>

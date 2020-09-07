@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import useDevice from '../customhooks/detectDevice';
 import {navigate} from 'hookrouter';
+import { address, phoneNumbers, siteName } from '../data/siteinfo';
 
 function Footer(props) {
 
@@ -46,8 +47,8 @@ function Footer(props) {
                 <div style={linkStyle.container(matches)}>
                     <h1 style={linkHeader}>CONTACT US</h1>
                     <ul style={{listStyleType:'none',padding:0,color:'#fff'}}>
-                        <li style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-map-marker-alt"></i>&nbsp; In ullamco do deserunt culpa commodo consequat labore tempor.</li>
-                        <li style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-phone-alt"></i>&nbsp; 08000000000, 07077776666</li>
+                        <li style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-map-marker-alt"></i>&nbsp; {address}</li>
+                        <li style={{paddingTop:10, color: '#736b6b'}}><i className="fas fa-phone-alt"></i>&nbsp; {phoneNumbers.map(number => <a style={{textDecoration:'none'}} href={`tel:${number}`}>{number}&nbsp;</a>)} </li>
                     </ul>
                 </div>
                 <div style={linkStyle.container(matches)}>
@@ -63,7 +64,7 @@ function Footer(props) {
                 </div>
             </div>
             <div>
-                <p style={{textAlign:'center', color:props.frontColor}}>{new Date().getFullYear()}&copy;Copyright. All Rights Reserved.</p>
+                <p style={{textAlign:'center', color:props.frontColor}}>Copyright&copy; {new Date().getFullYear()}&nbsp;{siteName} All Rights Reserved.</p>
             </div>
             
         </div>

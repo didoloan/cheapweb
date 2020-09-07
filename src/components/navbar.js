@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { navigate } from 'hookrouter';
 import useDevice from '../customhooks/detectDevice';
 import useScroll from '../customhooks/detectScroll';
+import { siteName } from '../data/siteinfo';
 
 function Navbar(props) {
     const navRef = React.createRef();
@@ -57,7 +58,6 @@ function Navbar(props) {
     }
     const navStyle = {
         container: isMobile => ({
-            overflow:'hidden',
             textAlign: 'left',
             width: isMobile?'100%':'auto',
             padding: isMobile?'0 40px 0 40px':0,
@@ -94,7 +94,7 @@ function Navbar(props) {
             for(let li of navRef.current.children){
                 if(li.childElementCount!==0){
                     li.childNodes[3].style.display = 'none';
-                    li.childNodes[2].style.transform = 'rotateX(180deg)';
+                    li.childNodes[2].style.transform = 'rotateX(0deg)';
                 }
             }
         }
@@ -158,7 +158,8 @@ function Navbar(props) {
             boxShadow: isMobile?'':'0 3px 8px #ccc',
             backgroundColor: props.backColor,
             display:'none',
-            transition:'.5s'
+            transition:'.5s',
+            overflow: 'hidden'
         })
         
     }
@@ -175,7 +176,7 @@ function Navbar(props) {
     return (
         <div style={navbarStyle.container(scrollPos)}>
             <div style={{backgroundColor:'#fff', width: 'auto', padding:11, margin:0}}>
-                <h1 style={{margin:0,padding:0}}>{logo}</h1>
+                <h1 style={{margin:0,padding:0}}>{siteName}</h1>
             </div>
             
             <ul style={navStyle.container(matches)} ref={navRef}>
