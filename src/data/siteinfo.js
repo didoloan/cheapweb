@@ -1,7 +1,15 @@
-const name = 'WEBNOWNG';
+const siteName = 'WEBNOWNG';
 
-const numbers = ['08138754586', '07018382371'];
+const phoneNumbers = ['08138754586', '07018382371'];
+
+const email = 'info@example.com';
 
 const address = '20 Allen Avenue, Ikeja, Lagos State.';
 
-module.exports = {siteName: name, phoneNumbers: numbers, address: address};
+const social = {
+    facebook:'https://www.facebook.com/IBM/',
+    twitter: 'https://twitter.com/IBM',
+    instagram: 'https://www.instagram.com/ibm/'
+}
+
+module.exports = {siteName, phoneNumbers, address, social, email};

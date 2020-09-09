@@ -4,6 +4,12 @@
   outline: none;
 }
 
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px;
+}
+
 input:focus {
   box-shadow: inset 0 0 5 #333;
 }
@@ -48,9 +54,11 @@ body {
 }
 
 
-/* @media only screen and (max-width: 768px) {
-  grid-template-columns: !important 1fr;
-} */
+@media only screen and (max-width: 768px) {
+  .grid2{
+    grid-template-columns: 1fr;
+  }
+}
 
 /* @media (prefers-reduced-motion: no-preference) {
   .App-logo {

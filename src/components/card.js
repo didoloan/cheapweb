@@ -14,7 +14,7 @@ function Card(props) {
             <div style={imgHolder.container(isOver)} onMouseEnter={() => setOver(1)} onMouseLeave={() => setOver(0)}>
             </div>
             <div>
-                <h1 style={{ width: '100%', top: '40%', marginBottom:0, textAlign: 'center', color:'#fff', WebkitTextStroke: '1px black' }}>{props.title}</h1>
+                <h2 style={{ width: '100%', top: '40%', marginBottom:0, textAlign: 'center', color:'black' }}>{props.title}</h2>
                 <p style={{ padding: 15, margin:0}}>{props.text}</p>
             </div>
         </div>
@@ -42,7 +42,7 @@ const cardStyle = {
         padding: 0,
         borderRadius: 6,
         marginBottom: 50,
-        boxShadow: 'hsl(0, 0%, 80%) 0 0 16px',
+        boxShadow: '0 0 16px hsl(0, 0%, 80%)',
         textAlign: 'center',
         boxSizing: 'border-box'
     })

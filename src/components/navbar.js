@@ -60,7 +60,7 @@ function Navbar(props) {
         container: isMobile => ({
             textAlign: 'left',
             width: isMobile?'100%':'auto',
-            padding: isMobile?'0 40px 0 40px':0,
+            padding: isMobile?'10px 40px 10px 40px':0,
             display: isMobile?'block':'flex',
             zIndex: 2,
             alignItems: 'center',
@@ -149,7 +149,7 @@ function Navbar(props) {
         container: isMobile => ({
             position: isMobile?'inherit':'absolute',
             top: isMobile?0:30,
-            padding: isMobile?0:'10px 0 0 0',
+            padding: isMobile?'8px 0 8px 0':'10px 0 0 0',
             listStyleType:'none',
             left: 0,
             width: 'auto',
@@ -175,7 +175,7 @@ function Navbar(props) {
 
     return (
         <div style={navbarStyle.container(scrollPos)}>
-            <div style={{backgroundColor:'#fff', width: 'auto', padding:11, margin:0}}>
+            <div style={{backgroundColor:'#fff', width: 'auto', padding:11, margin:0, display:'flex', alignItems:'center'}}>
                 <h1 style={{margin:0,padding:0}}>{siteName}</h1>
             </div>
             
